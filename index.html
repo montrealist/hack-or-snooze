@@ -38,7 +38,7 @@
     <a class="nav-link" href="#" id="nav-all">Hack or Snooze</a>
   </div>
   <div class="user-nav-links hidden">   |   
-    <a href="#" class="nav-link" id="nav-submit-new-story">submit</a>
+    <a href="#" class="nav-link" id="nav-submit">submit</a>
        |   
     <a href="#" class="nav-link" id="nav-favorites">favorites</a>
           |   
@@ -53,6 +53,8 @@
 
 <!-- area for stories (all stories, user stories, favorites) -->
 <section class="stories-container container">
+
+  <!-- form for submitting a new story -->
   <form
   action="#"
   id="add-story-form"
@@ -80,6 +82,12 @@
 
   <!-- List of all stories -->
   <ol id="all-stories-list" class="stories-list"></ol>
+
+  <!-- List of user's favorited stories -->
+  <ol id="favorite-stories" class="stories-list"></ol>
+
+  <!-- List of user's submitted stories-->
+  <ol id="submitted-stories" class="stories-list"></ol>
 
 </section>
 
@@ -122,6 +130,24 @@
     </div>
     <button type="submit">create account</button>
   </form>
+</section>
+
+<!-- User Profile -->
+<section id="user-profile" class="hidden">
+  <div class="profile-box container">
+    <h4>User Profile Info</h4>
+    <section>
+     <div>
+       Name:  <span id="profile-name"></span>
+     </div> 
+     <div>
+       Username:  <span id="profile-username"></span>
+     </div>
+     <div>
+       Account Created on:  <span id="profile-birthdate"></span>
+     </div>
+    </section>
+  </div>
 </section>
 
 <!-- Library JS & our JS -->

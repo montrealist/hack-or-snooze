@@ -24,8 +24,14 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    // UNIMPLEMENTED: complete this function!
-    return "hostname.com";
+    let regEx = /https?:\/\//;
+    let hostName = this.url.toString().replace(regEx, '');
+    let ind = hostName.indexOf('/');
+    if(ind != -1){
+      hostName = hostName.slice(0, ind);
+    }
+    
+    return hostName;
   }
 }
 
@@ -86,7 +92,7 @@ class StoryList {
         }
       }
     });
-    console.log(response);
+    /*
     return new Story(
       response.storyId,
       response.title,
@@ -94,7 +100,9 @@ class StoryList {
       response.url,
       response.username,
       response.createdAt
-    )
+    ) 
+      /*
+    old code, might be useful at some point */
   }
 }
 
@@ -209,4 +217,32 @@ class User {
       return null;
     }
   }
+
+  static async updateUser() {
+    try {
+      const response = await axios({
+        url: `${BASE_URL}/users/${currentUser.username}?token=${currentUser.loginToken}`,
+        method: "GET"
+      });
+
+      let { user } = response.data;
+
+      return new User(
+        {
+          username: user.username,
+          name: user.name,
+          createdAt: user.createdAt,
+          favorites: user.favorites,
+          ownStories: user.stories
+        },
+        currentUser.loginToken
+      );
+    } catch (err) {
+      console.error("updateUser failed", err);
+      return null;
+    }
+  
+  }
+
+
 }

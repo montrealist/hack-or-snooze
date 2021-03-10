@@ -35,8 +35,12 @@ function updateNavOnLogin() {
   $signupForm.hide();
   $userNavLinks.show();
   $navUserProfile.text(`${currentUser.username}`).show();
+  $('#profile-name').text(`${currentUser.name}`);
+  $('#profile-username').text(`${currentUser.username}`);
+  $('#profile-birthdate').text(`${currentUser.createdAt.slice(0,10)}`);
 }
 
+/** When a user logs out, update the navbar */
 function updateNavOnLogout() {
   console.debug("updateNavOnLogout");
   $navLogin.show();
@@ -45,9 +49,26 @@ function updateNavOnLogout() {
 
 }
 
+/** Nav-bar click handler, directing traffic for a logged-in user */
 function onNavLinkClick(evt) {
   console.debug("onNavLinkClick");
-  // if (evt.target.){
-
-  // }
+  
+  if(evt.target.id=="nav-submit"){
+    $addStoryForm.show();
+  }
+  if(evt.target.id=="nav-favorites"){
+    hidePageComponents();
+    compileFavorites();
+  }
+  if(evt.target.id=="nav-my-stories"){
+    hidePageComponents();
+    displayMyStories();
+  }
 }
+
+$userNavLinks.on('click', onNavLinkClick);
+
+$('#nav-user-profile').on('click', () => {
+  hidePageComponents();
+  $('#user-profile').show();
+});

@@ -58,10 +58,9 @@ $signupForm.on("submit", signup);
 
 function logout(evt) {
   console.debug("logout", evt);
-  $userNavLinks.hide();
+  updateNavOnLogout();
   localStorage.clear();
   location.reload();
-  // updateNavOnLogout();
 }
 
 $navLogOut.on("click", logout);
@@ -115,4 +114,44 @@ function updateUIOnUserLogin() {
   $allStoriesList.show();
 
   updateNavOnLogin();
+}
+
+/************************************************************************
+  * Functions related to favorited stories
+  */
+
+/** Toggle the favorite status of a storyId passed to the function */
+async function toggleFavoriteStatus (storyId){
+  if (!currentUser) {
+    alert("You must be signed in to favorite a story.")
+  }
+  
+  let method = "";
+  let verb = "";
+  let classChange = '';
+
+  if(isUserFavorite(storyId)){
+    method = "DELETE";
+    verb = "Removing";
+    // let index = findFavoriteIndex(storyId);
+    // currentUser.favorites.splice(index, 1);
+  } else {
+    // addStoryToFavorites(storyId);
+    method = "POST";
+    verb = "Adding";
+  }
+  
+  try {
+    await axios({
+    url: `${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`,
+    method,
+    params: { "token": currentUser.loginToken },
+  });
+
+  }
+  catch (e){
+    console.error(`${verb} favorite failed`, e);
+  }
+
+  currentUser = await User.updateUser();
 }
