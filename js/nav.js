@@ -35,9 +35,7 @@ function updateNavOnLogin() {
   $signupForm.hide();
   $userNavLinks.show();
   $navUserProfile.text(`${currentUser.username}`).show();
-  $('#profile-name').text(`${currentUser.name}`);
-  $('#profile-username').text(`${currentUser.username}`);
-  $('#profile-birthdate').text(`${currentUser.createdAt.slice(0,10)}`);
+  updateProfile();
 }
 
 /** When a user logs out, update the navbar */

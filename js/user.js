@@ -155,3 +155,10 @@ async function toggleFavoriteStatus (storyId){
 
   currentUser = await User.updateUser();
 }
+
+
+function updateProfile(){
+  $('#profile-name').text(`${currentUser.name}`);
+  $('#profile-username').text(`${currentUser.username}`);
+  $('#profile-birthdate').text(`${currentUser.createdAt.slice(0,10)}`);
+}
