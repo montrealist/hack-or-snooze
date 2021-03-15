@@ -141,7 +141,7 @@ async function addStoryToPage(){
   const storyObj = {title, author, url};
   console.log(storyObj);
 
-  let story = await storyList.addStory(currentUser, storyObj);
+  const story = await storyList.addStory(currentUser, storyObj);
   hidePageComponents();
   getAndShowStoriesOnStart();
   putStoriesOnPage();
@@ -150,7 +150,7 @@ async function addStoryToPage(){
 
 $addStoryForm.on('submit', async function(e) {
   e.preventDefault();
-  let story = addStoryToPage();
+  const story = addStoryToPage();
   if(story){
   $('#story-author').val('');
   $('#story-title').val('');
