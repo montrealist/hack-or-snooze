@@ -162,7 +162,7 @@ $addStoryForm.on('submit', async function(e) {
 
 /* Checks to see if current story is favorited */ 
 function isUserFavorite(storyId){
-  return currentUser.favorites.some(story => (story.storyId == storyId));
+  return currentUser && currentUser.favorites.some(story => (story.storyId == storyId));
 }
  /* Finds the story's index in the users favorite list */
 function findFavoriteIndex(storyId) {
