@@ -6,19 +6,23 @@ const $body = $("body");
 
 const $storiesLoadingMsg = $("#stories-loading-msg");
 const $allStoriesList = $("#all-stories-list");
+const $favoritedStories = $("#favorited-stories");
+const $ownStories = $("#my-stories");
+
+// selector that finds all three story lists
+const $storiesLists = $(".stories-list");
 
 const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
 
+const $submitForm = $("#submit-form");
+
+const $navSubmitStory = $("#nav-submit-story");
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");
 
-const $addStoryForm = $('#add-story-form');
-const $userNavLinks = $('.user-nav-links');
-
-const $favoriteStories = $('#favorite-stories');
-const $myStories = $('#submitted-stories');
+const $userProfile = $("#user-profile");
 
 /** To make it easier for individual components to show just themselves, this
  * is a useful function that hides pretty much everything on the page. After
@@ -27,13 +31,11 @@ const $myStories = $('#submitted-stories');
 
 function hidePageComponents() {
   const components = [
-    $allStoriesList,
+    $storiesLists,
+    $submitForm,
     $loginForm,
     $signupForm,
-    $addStoryForm,
-    $favoriteStories,
-    $myStories,
-    $('#user-profile')
+    $userProfile
   ];
   components.forEach(c => c.hide());
 }
@@ -42,7 +44,7 @@ function hidePageComponents() {
 
 async function start() {
   console.debug("start");
-  
+
   // "Remember logged-in user" and log in, if credentials in localStorage
   await checkForRememberedUser();
   await getAndShowStoriesOnStart();

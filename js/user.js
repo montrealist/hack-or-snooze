@@ -58,7 +58,6 @@ $signupForm.on("submit", signup);
 
 function logout(evt) {
   console.debug("logout", evt);
-  updateNavOnLogout();
   localStorage.clear();
   location.reload();
 }
@@ -98,7 +97,7 @@ function saveUserCredentialsInLocalStorage() {
 }
 
 /******************************************************************************
- * General UI stuff about users
+ * General UI stuff about users & profiles
  */
 
 /** When a user signs up or registers, we want to set up the UI for them:
@@ -108,57 +107,25 @@ function saveUserCredentialsInLocalStorage() {
  * - generate the user profile part of the page
  */
 
-function updateUIOnUserLogin() {
+async function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
 
+  hidePageComponents();
+
+  // re-display stories (so that "favorite" stars can appear)
+  putStoriesOnPage();
   $allStoriesList.show();
 
   updateNavOnLogin();
+  generateUserProfile();
 }
 
-/************************************************************************
-  * Functions related to favorited stories
-  */
+/** Show a "user profile" part of page built from the current user's info. */
 
-/** Toggle the favorite status of a storyId passed to the function */
-async function toggleFavoriteStatus (storyId){
-  if (!currentUser) {
-    alert("You must be signed in to favorite a story.")
-  }
-  
-  let method = "";
-  let verb = "";
-  let classChange = '';
+function generateUserProfile() {
+  console.debug("generateUserProfile");
 
-  if(isUserFavorite(storyId)){
-    method = "DELETE";
-    verb = "Removing";
-    // let index = findFavoriteIndex(storyId);
-    // currentUser.favorites.splice(index, 1);
-  } else {
-    // addStoryToFavorites(storyId);
-    method = "POST";
-    verb = "Adding";
-  }
-  
-  try {
-    await axios({
-    url: `${BASE_URL}/users/${currentUser.username}/favorites/${storyId}`,
-    method,
-    params: { "token": currentUser.loginToken },
-  });
-
-  }
-  catch (e){
-    console.error(`${verb} favorite failed`, e);
-  }
-
-  currentUser = await User.updateUser();
-}
-
-
-function updateProfile(){
-  $('#profile-name').text(`${currentUser.name}`);
-  $('#profile-username').text(`${currentUser.username}`);
-  $('#profile-birthdate').text(`${currentUser.createdAt.slice(0,10)}`);
+  $("#profile-name").text(currentUser.name);
+  $("#profile-username").text(currentUser.username);
+  $("#profile-account-date").text(currentUser.createdAt.slice(0, 10));
 }
